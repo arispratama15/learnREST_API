@@ -1,8 +1,15 @@
 const express = require('express');
 const app = express();
+const mysql = require('mysql')
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'ris',
+  password: 'welcome@123',
+  database: 'harga_pajak'
+})
 
 // Send a GET request to READ a list of vote
-app.get('/quotes', (req, res)=>{
+app.get('/vote', (req, res)=>{
     res.json({greeting: "Hello World!"});
   });
 // Send a GET request to READ (view) a vote
