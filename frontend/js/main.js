@@ -5,8 +5,9 @@ let items = '';
 //  FETCH FUNCTIONS
 // ------------------------------------------
 
-fetch('http://localhost:3000/vote')
+fetch('http://localhost:3001/vote')
   .then(response => response.json())
+  // .then(data => console.log(data))
   .then(data => generateList(data))
 
 
@@ -14,15 +15,18 @@ fetch('http://localhost:3000/vote')
 //  HELPER FUNCTIONS
 // ------------------------------------------
 function generateList(data) {
-  let songList = data.songList;
+  let songList = data.data;
   for (let i = 0; i < songList.length; i++) {
     let playlist = songList[i];
     items += `
           <li>
-            <div>
-                <div>${playlist.band} - ${playlist.title} </div> <button onclick="selectItem(${playlist.id})">vote me!</button>
-                <div> score: <div id="${playlist.id}">${playlist.score}</div></div>
+            <div class="row">
+                <div class="col-sm">${playlist.band} - ${playlist.title} </div> 
+                <div class="col-sm"><button onclick="selectItem(${playlist.id})">vote me!</button></div>
               </div>
+            <div class="row">
+                <div class="col-1"> score: </div>
+                <div class="col-1" id="${playlist.id}">${playlist.score}</div>
             </div>
           </li>
         `;
@@ -46,14 +50,14 @@ function generateList(data) {
 }
 
 function selectItem(i) {
-  fetch(`http://localhost:3000/vote/${i}`)
+  fetch(`http://localhost:3001/vote/${i}`)
     .then(response => response.json())
     .then(data => incrementValue(data.song))
 
 }
 
 function incrementValue(data) {
-/*
+
   let band = data[0].band;
   let title = data[0].title;
   let score = data[0].score + 1;
@@ -78,30 +82,30 @@ function incrementValue(data) {
     .then(reloadPage())
 }
 
-function reloadPage(){
+function reloadPage() {
   reload = location.reload();
 }
-*/
-  let band = data[0].band;
-  let title = data[0].title;
-  let score = data[0].score + 1;
 
-  console.log(data);
-  console.log(score);
-  console.log(title);
-  console.log(band);
-  console.log(data[0].id);
-  return fetch(`http://localhost:3000/vote/${data[0].id}`, {
-    method: 'PUT',
-     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      'band': `${band}`,
-      'title': `${title}`,
-      'score': `${score}`
-    }),
-  })
-    .then((res) => console.log(`${band}`))
-}
+//   let band = data[0].band;
+//   let title = data[0].title;
+//   let score = data[0].score + 1;
+
+//   console.log(data);
+//   console.log(score);
+//   console.log(title);
+//   console.log(band);
+//   console.log(data[0].id);
+//   return fetch(`http://localhost:3001/vote/${data[0].id}`, {
+//     method: 'PUT',
+//      headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({
+//       'band': `${band}`,
+//       'title': `${title}`,
+//       'score': `${score}`
+//     }),
+//   })
+//     .then((res) => console.log(`${band}`))
+// }
 
 // ------------------------------------------
 //  EVENT LISTENERS

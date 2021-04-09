@@ -1,10 +1,19 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const app = express();
 const listVotingRouter = require('./routes/votinglists');
 
 // CORS config
 app.use(cors())
+
+// Body Parser
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
 // Send a GET request to READ a list of vote
 app.use('/vote', listVotingRouter);
@@ -30,4 +39,4 @@ app.use((err, req, res, next) => {
     return;
 });
 
-app.listen(3000, () => console.log('Vote API listening on port 3000!'));
+app.listen(3001, () => console.log('Vote API listening on port 3000!'));
